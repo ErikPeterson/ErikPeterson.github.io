@@ -27,6 +27,14 @@ gulp.task('buildcss', function(){
     .pipe(gulp.dest(config.dist_path + '/css'));
 });
 
+var htmlmin = require('gulp-htmlmin');
+
+gulp.task('buildhtml', function(){
+    gulp.src('./index.html')
+        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(gulp.dest(config.dist_path));
+});
+
 gulp.task('watch', function(){
     gulp.watch(config.js_path + '/**/*.js', ['buildjs']);
     gulp.watch(config.scss_path + '/**/*.scss', ['buildcss']);
