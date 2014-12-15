@@ -11,11 +11,12 @@
   "devDependencies": {
     "browserify": "^7.0.1",
     "gulp": "^3.8.10",
+    "gulp-cssmin": "^0.1.6",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^1.2.4",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-uglify": "^1.0.2",
     "node-sass": "^1.2.2",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-transform": "^1.0.0"
   }
 }
