@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'devicons';
 
 html{
     font-size: 16px;
@@ -6,12 +7,12 @@ html{
     font-weight: 300;
 }
 body{
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     min-width: 320px;
     width: 100%;
-    height: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -33,11 +34,29 @@ a:visited{
     color: $vlink-color;
 }
 
+ul{
+    margin: 1rem 0 0 0;
+    padding: 0;
+    text-align: left;
+    list-style: circle;
+    list-style-position: inside;
+    li{
+        margin-bottom: .5rem;
+    }
+}
+
 .long{
     display: none;
+    @media screen and (min-width: $size-lg){
+        display: inherit;
+    }
+
 }
 .short{
     display: inherit;
+    @media screen and (min-width: $size-lg){
+        display: none;
+    }
 }
 
 img{
@@ -95,13 +114,27 @@ main{
     position: relative;
     min-width: 320px;
     width: 100%;
-    margin-top: 3.25rem;
+    margin-top: 3.75rem;
 }
 
 section{
+    display: inline-block;
     box-sizing: border-box;
     padding: 0 1rem 1rem 1rem;
     text-align: left;
+    width: 100%;
+    max-width: 320px;
+
+    @media screen and (min-width: $size-md){
+        max-width: 640px;
+    }
+    @media screen and (min-width: $size-lg){
+        max-width: 1024px;
+    }
+
+    > h3:first-child{
+        text-align: center;
+    }
 }
 
 section > figure{
@@ -123,12 +156,59 @@ section > figure{
         height: auto;
         padding: 0 2em;
         margin-bottom: 1em;
+            @media screen and (min-width: $size-md){
+                max-width: 640px;
+            }
+           
+            @media screen and (min-width: $size-lg){
+                float: left;
+                width: 50%;
+                max-width: none;
+            }
     }
 
     >figcaption{
         display: inline-block;
-        width: 90%;
+        width: 100%;
         max-width: 320px;
+            @media screen and (min-width: $size-md){
+                max-width: 640px;
+            }
+
+            @media screen and (min-width: $size-lg){
+                position: relative;
+                width: 45%;
+                float: right;
+                max-width: none;
+            }
     }
 }
 
+ul.social-links{
+    li{
+        display: inline-block;
+        padding: 0 .5rem 0 0;
+    }
+}
+
+span.devicons{
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+span.email-handle{
+    display: block;
+    padding: .5rem;
+    cursor: pointer;
+    color: white;
+    background-color: $link-color;
+    >a{
+        color: white;
+        &:hover{
+            color: white;
+        }
+    }
+    &:hover{
+        background-color: $alink-color;
+    }
+}

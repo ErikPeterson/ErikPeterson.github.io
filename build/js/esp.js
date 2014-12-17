@@ -1,18 +1,21 @@
-var $=require('qwery');
+var $ = 'querySelectorAll' in document ? function(selector){ return Array.prototype.slice.call(document.querySelectorAll(selector));} : require('qwery');
+var smoothScroll = require('./smoothScroll.js');
 
 var ESP = {
     initialize: function(){
-        var path = window.location.search === "" ? window.location.pathname : window.location.search.replace(/^?route=/,'/');
-
+        var path = window.location.search === "" ? window.location.pathname : window.location.search.replace(/^\?route=/,'/');
+        this.scrolling = false;
+        this.els = {};
+        this.menubar = $('header')[0];
         this.bindHistory();
         this.captureLinks();
+        this.bindEmail();
         if (window.history.state && window.history.state.path) return this.route(window.history.state.path)
         this.route(path);
     },
     captureLinks: function(){
         var that = this;
         var $links = $('a');
-
         $links.forEach(this.bindLink.bind(this));
         
     },
@@ -38,23 +41,47 @@ var ESP = {
             that.route(path);
         });
     },
+    bindEmail: function(){
+        var emailEl = $('.email-handle')[0];
+        var listener = function(e){
+            emailEl.innerHTML = "<a href='mailto:eriksalgstrom@gmail.com'>eriksalgstrom@gmail.com</a>";
+            emailEl.removeEventListener('click', listener);
+        };
+
+        emailEl.addEventListener('click', listener);
+    },
     route: function(path){
         var action = path.replace(/^\//,'');
             action = (action === '') ? 'index' : action;
-
-        this[action]();
+        if(!this.scrolling) this[action]();
     },
     index: function(){
-        console.log("hit the index route");
+        this.els.index = this.els.index || $('body')[0];
+        this._startScroll();
+        smoothScroll(this.els.index, this.menubar.getBoundingClientRect().height, this._endScroll.bind(this));
     },
     about: function(){
-        console.log("hit about route");
+        this.els.about = this.els.about || $('section[data-section-id="about"]')[0];
+        this._startScroll();
+        smoothScroll(this.els.about, this.menubar.getBoundingClientRect().height, this._endScroll.bind(this));
     },
     work: function(){
-        console.log("hit work route");
+        this.els.work = this.els.work || $('section[data-section-id="work"]')[0];
+        this._startScroll();
+        smoothScroll(this.els.work, this.menubar.getBoundingClientRect().height, this._endScroll.bind(this));
     },
     contact: function(){
-        console.log("hit contact route");
+        this.els.contact = this.els.contact || $('section[data-section-id="contact"]')[0];
+        this._startScroll();
+        smoothScroll(this.els.contact, this.menubar.getBoundingClientRect().height, this._endScroll.bind(this));
+    },
+    _startScroll: function(){
+        console.log('calling start scroll');
+        this.scrolling = true;
+    },
+    _endScroll: function(){
+        console.log('calling end scroll');
+        this.scrolling = false;
     }
 };
 
